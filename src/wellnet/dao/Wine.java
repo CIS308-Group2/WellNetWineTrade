@@ -14,13 +14,13 @@ public class Wine {
 	
 	public static String[] ColumnNames = {
 		"WINE_ID",
-		"ACCOUNT_ID",
 		"NAME",
 		"YEAR",
 		"TYPE",
 		"STOCK",
 		"PROMO_MATERIAL",
 		"PAIRING_TASTING_NOTES",
+		"ACCOUNT_ID"
 		
 	};
 	
@@ -28,17 +28,17 @@ public class Wine {
 		
 	}
 
-	public Wine(int wineId, int accountId, String name, int year, String type,
-			int stock, String promoMaterials, String pairingTastingNotes) {
+	public Wine(int wineId, String name, int year, String type, int stock, 
+				String promoMaterials, String pairingTastingNotes, int accountId) {
 		
 		this.wineId = wineId;
-		this.accountId = accountId;
 		this.name = name;
 		this.year = year;
 		this.type = type;
 		this.stock = stock;
 		this.promoMaterials = promoMaterials;
 		this.pairingTastingNotes = pairingTastingNotes;
+		this.accountId = accountId;
 	}
 	
 	public int getWineId() {

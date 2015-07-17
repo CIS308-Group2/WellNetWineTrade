@@ -1,9 +1,10 @@
-<%@ page import="wellnet.*"%>
+<%@ page import="wellnet.*, wellnet.dao.*"%>
 
 <%@ page import="java.net.URL" %>
 <%@ page import="java.sql.*" %>
 
 <%Wine one = new Wine();%>
+<%DBContext dataAccess = new DBContext(); %>
 
 <!-- 
 Steve Simpson 21066092
@@ -47,38 +48,42 @@ Assignment 7.1
 					<table class='table'>
 						<tr>
 							<td>Wine Name</td>
-							<td><input type='text' name='name' id='wineInfo' /></td>
+							<td><input type='text' name='name' id='name' /></td>
 						</tr>
 					
 						<tr>
 							<td>Year</td>
-							<td><input type='text' name='year' id='wineInfo' /></td>
+							<td><input type='text' name='year' id='year' /></td>
 						</tr>
 						
 						<tr>
 							<td>Type of Wine</td>
-							<td><input type='text' name='type' id='wineInfo' /></td>
+							<td><input type='text' name='type' id='type' /></td>
 						</tr>
 
 						<tr>
 							<td>Stock Number</td>
-							<td><input type='text' name='stock' id='wineInfo' /></td>
+							<td><input type='text' name='stock' id='stock' /></td>
 						</tr>
 						
 						<tr>
 							<td>Promo Material</td>
-							<td><input type='text' name='promoMaterial' id='wineInfo' /></td>
+							<td><input type='text' name='promoMaterial' id='promoMaterial' /></td>
 						</tr>
 						
 						<tr>
 							<td>Pairing Tasting Notes</td>
-							<td><input type='text' name='pairingTastingNotes' id='wineInfo' /></td>
+							<td><input type='text' name='pairingTastingNotes' id='pairingTastingNotes' /></td>
 						</tr>
 						
+						<!-- Account Id is system assigned by using sequence in DB. User should not be aware of it or be able to set it.
+							 In this case we should already have account ID because the user had to login to get to this page.
+							 The login page will need to store the user account and/or business account in the session to be retrieved by the proceeding pages.
 						<tr>
 							<td>Account ID</td>
-							<td><input type='text' name='accountId' id='wineInfo' /></td>
-						</tr>
+							<td><input type='text' name='accountId' id='accountId' /></td>
+						</tr>						
+						 -->
 						
 						<tr>
 							<td></td>
@@ -98,7 +103,7 @@ if(request.getMethod().equals("POST")){
 	one.setPairingTastingNotes(request.getParameter("pairingTastingNotes"));
 	one.setAccountId(Integer.parseInt(request.getParameter("accountId")));
 	
-	one.addWine();
+	dataAccess.addWine(one);
 	
 }
 

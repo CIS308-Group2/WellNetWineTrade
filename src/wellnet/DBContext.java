@@ -12,10 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import oracle.jdbc.driver.OracleDriver;
-import wellnet.dao.Wine;
-import wellnet.dao.WineTranslation;
-import wellnet.dao.WineryBio;
-import wellnet.dao.WineryBioTranslation;
+import wellnet.dao.*;
 
 //use this class to establish a connection to the database
 public class DBContext {
@@ -36,9 +33,7 @@ public class DBContext {
 	// Constructor
 	public DBContext() throws IOException, SQLException, ClassNotFoundException {
 		
-			// Uses the jbdc driver to create a new connection to the database
-			DriverManager.registerDriver(new OracleDriver());
-			
+			// Uses the jbdc driver to create a new connection to the database			
 			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("../config.properties"));
 			urlConnectionString = properties.getProperty("jdbc.connectionURL");
 			username = properties.getProperty("jdbc.username");
@@ -49,7 +44,93 @@ public class DBContext {
 		
 	}
 	
-	/**************Place methods that make database calls below.****************/
+	/**************Place methods that make database calls below.******************/
+	
+	/**
+	 * In case we need to use the account ID for something.
+	 * @return the next int in the SEQ_ACCOUNT_TYPE sequence
+	 * @throws SQLException
+	 */
+	public int getNextAccountId() throws SQLException {
+		
+		Connection connection = null;
+		int accountId = 0;
+		
+		try{
+			
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			
+			String mySQL = "SELECT SEQ_ACCOUNT_TYPE.NEXTVAL FROM DUAL ";
+			PreparedStatement preparedStatement = connection.prepareStatement(mySQL);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()){
+				accountId = rs.getInt(1);
+			}
+			
+			return accountId;
+		}finally{
+			connection.close();
+		}
+	}
+	
+	// ***********This method needs to be parameterized************
+	public void addUserAccount(UserAccount userAccount) throws SQLException{
+		
+		Connection connection = null;
+		
+		try{
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			
+			String sql = "INSERT INTO USER_ACCOUNT VALUES('"+ userAccount.getUserId() +"','"+ userAccount.getUsername() +"','"+ 
+															userAccount.getPswd() +"','"+ userAccount.getPswdSalt() +"','"+ userAccount.getAccountId() +"')";
+		
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);			
+			statement.close();
+		}finally{
+			connection.close();
+		}
+	}
+	
+	// ***********This method needs to be parameterized************
+	public void addWine(Wine wine){
+				//Creates insert statement
+				String sql = "INSERT INTO WINE VALUES(seq_wine.nextval,'"+ wine.getName() +"','"+ wine.getYear() +"','"+ 
+														wine.getType() +"','"+ wine.getStock()+"','"+ wine.getPromoMaterials() +"','"+ 
+														wine.getPairingTastingNotes() +"','"+ wine.getAccountId() +"')";
+				
+				Connection connection = null;
+				
+				try {
+					connection = DriverManager.getConnection(urlConnectionString, username, password);
+					// Creates a new statement and executes the SQL query
+					Statement statement = connection.createStatement();
+					statement.executeUpdate(sql);			
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					//DisplayErrorMessage("There was an error executing the query on the database");
+				}
+			}
+	// ***********This method needs to be parameterized************
+	public void addBio(WineryBio wineryBio){
+		String sql = "INSERT INTO WINERY_BIO VALUES('"+ wineryBio.getAccountId() +"','"+ wineryBio.getBio() +"')";
+		
+		Connection connection = null;
+		
+		try {
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);			
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//DisplayErrorMessage("There was an error executing the query on the database");
+		}
+	}
 	
 	/**
 	 * Returning a list is likely not necessary.
@@ -135,13 +216,14 @@ public class DBContext {
 		if(tableName.equalsIgnoreCase("WINERY_BIO")){
 			
 			while(rs.next()){
-				wineryBio.add(new WineryBio(rs.getString(WineryBio.ColumnNames[0])));
+				wineryBio.add(new WineryBio(rs.getInt(WineryBio.ColumnNames[0]),rs.getString(WineryBio.ColumnNames[1])));
 			}
 			
 		}else if(tableName.equalsIgnoreCase("BIO_TRANSLATION")){
 			
 			while(rs.next()){
-				wineryBio.add(new WineryBioTranslation(rs.getString(WineryBio.ColumnNames[0]), WineryBioTranslation.ColumnNames[0]));
+				wineryBio.add(new WineryBioTranslation(rs.getInt(WineryBioTranslation.ColumnNames[0]),rs.getInt(WineryBioTranslation.ColumnNames[1]),
+														rs.getString(WineryBioTranslation.ColumnNames[1]), rs.getString(WineryBioTranslation.ColumnNames[3])));
 			}
 			
 		}else{
@@ -158,17 +240,19 @@ public class DBContext {
 		if(tableName.equalsIgnoreCase("WINE")){
 			
 			while(rs.next()){
-				wineStock.add(new Wine(rs.getInt(Wine.ColumnNames[0]),rs.getInt(Wine.ColumnNames[1]),rs.getString(Wine.ColumnNames[2]),
-									rs.getInt(Wine.ColumnNames[3]),rs.getString(Wine.ColumnNames[4]),rs.getInt(Wine.ColumnNames[5]),
-									rs.getString(Wine.ColumnNames[6]),rs.getString(Wine.ColumnNames[7])));
+				wineStock.add(new Wine(rs.getInt(Wine.ColumnNames[0]),rs.getString(Wine.ColumnNames[1]),rs.getInt(Wine.ColumnNames[2]),
+									rs.getString(Wine.ColumnNames[3]),rs.getInt(Wine.ColumnNames[4]),rs.getString(Wine.ColumnNames[5]),
+									rs.getString(Wine.ColumnNames[6]),rs.getInt(Wine.ColumnNames[7])));
 			}
 			
 		}else if(tableName.equalsIgnoreCase("WINE_TRANSLATION")){
 			
 			while(rs.next()){
-				wineStock.add(new WineTranslation(rs.getInt(Wine.ColumnNames[0]),rs.getInt(Wine.ColumnNames[1]),rs.getString(Wine.ColumnNames[2]),
-						rs.getInt(Wine.ColumnNames[3]),rs.getString(Wine.ColumnNames[4]),rs.getInt(Wine.ColumnNames[5]),
-						rs.getString(Wine.ColumnNames[6]),rs.getString(Wine.ColumnNames[7]), rs.getString(WineTranslation.ColumnNames[0])));
+				wineStock.add(new WineTranslation(rs.getInt(WineTranslation.ColumnNames[0]),rs.getInt(WineTranslation.ColumnNames[1]),
+													rs.getString(WineTranslation.ColumnNames[2]),rs.getString(WineTranslation.ColumnNames[3]),
+													rs.getInt(WineTranslation.ColumnNames[4]),rs.getString(WineTranslation.ColumnNames[5]),
+													rs.getInt(WineTranslation.ColumnNames[6]),rs.getString(WineTranslation.ColumnNames[7]),
+													rs.getString(WineTranslation.ColumnNames[8]),rs.getInt(WineTranslation.ColumnNames[9])));
 			}
 			
 		}else{

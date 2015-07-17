@@ -5,6 +5,11 @@ public class AccountType {
 	private int accountTypeId = 0;
 	private String accountType = "";
 	
+	public static String[] ColumnNames = {
+		"ACCOUNT_TYPE_ID",
+		"ACCOUNT_TYPE"
+	};
+	
 	public AccountType(){
 		
 	}

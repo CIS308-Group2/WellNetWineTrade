@@ -1,9 +1,10 @@
-<%@ page import="wellnet.*"%>
+<%@ page import="wellnet.*, wellnet.dao.*"%>
 
 <%@ page import="java.net.URL" %>
 <%@ page import="java.sql.*" %>
 
 <%WineryBio one = new WineryBio();%>
+<%DBContext dataAccess = new DBContext(); %>
 
 <!-- 
 Steve Simpson 21066092
@@ -45,14 +46,18 @@ Assignment 7.1
 
 			
 					<table class='table'>
+						<!-- Account Id is system assigned by using sequence in DB. User should not be aware of it or be able to set it.
+							 In this case we should already have account ID because the user had to login to get to this page.
+							 The login page will need to store the user account and/or business account in the session to be retrieved by the proceeding pages.
 						<tr>
-							<td>Account Number</td>
-							<td><input type='text' name='accountId' id='formQuestion' /></td>
-						</tr>
+							<td>Account ID</td>
+							<td><input type='text' name='accountId' id='accountId' /></td>
+						</tr>						
+						 -->
 					
 						<tr>
 							<td>Bio</td>
-							<td><input type='text' name='bio' id='formQuestion' /></td>
+							<td><input type='text' name='bio' id='bio' /></td>
 						</tr>
 
 						<tr>
@@ -70,7 +75,7 @@ if(request.getMethod().equals("POST")){
 	one.setAccountId(Integer.parseInt(request.getParameter("accountId")));
 	one.setBio(request.getParameter("bio"));
 	
-	one.addBio();
+	dataAccess.addBio(one);
 	
 }
 

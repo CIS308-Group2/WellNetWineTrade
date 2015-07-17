@@ -1,4 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page import="wellnet.*"%>
+
+<%@ page import="java.net.URL" %>
+<%@ page import="java.sql.*" %>
+
+<%WineryBio one = new WineryBio();%>
+
+<!-- 
+Steve Simpson 21066092
+06/30/15
+CIS404-M308
+Assignment 7.1
+-->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
@@ -12,13 +24,6 @@
 
 <body>
 <div id ="wrapper">
-<div id ="top">
-<div id ="topimg">
-<img src="title.jpg" width = "765" height = "225" alt = "Bottles "/>
-</div>
-
-</div>
-
 
 <div id ="leftcolumn">
 <ul class="navList">
@@ -33,17 +38,47 @@
 
 <div id ="rightcolumn">
     
-    <p>Wellnet Australia Pty Ltd has developed the Wellnet Wine Trade 
-        Management System. The system assists in the procurement, promotion 
-        and distribution of Australian wine to international markets.</p> 
-
-    <p>Wellnet is a wine distribution company that develops international markets 
-        for more than 20 award-winning wineries from Australia's premium wine 
-        regions. Around 95 per cent are West Australian, with the focus on small, 
-        boutique, family-run wineries.  </p>
 
 
+			<h2 align='center'>Enter the Winery Bio</h2>
+			<form method='post' action='insert.jsp'>
 
+			
+					<table class='table'>
+						<tr>
+							<td>Account Number</td>
+							<td><input type='text' name='accountId' id='formQuestion' /></td>
+						</tr>
+					
+						<tr>
+							<td>Bio</td>
+							<td><input type='text' name='bio' id='formQuestion' /></td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td><input type='submit' value='Enter'/></td>
+						</tr>
+					</table>
+			</form>
+
+
+<%
+if(request.getMethod().equals("POST")){ 
+
+
+	one.setAccountId(Integer.parseInt(request.getParameter("accountId")));
+	one.setBio(request.getParameter("bio"));
+	
+	one.addBio();
+	
+}
+
+
+%>
+			</p>
+
+	
 <div id ="footer">
 <p><a href="">Winery Portal</a>
 <a href="">Importer Portal</a>
@@ -58,4 +93,4 @@
 </div>
 </div>
 </body>
-</html>
+</html>			

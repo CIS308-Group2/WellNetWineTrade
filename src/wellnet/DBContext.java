@@ -155,6 +155,39 @@ public class DBContext {
 		return one;
 	}
 	
+	//This method adds a business account to the database
+	public void addBusinessAccount(BusinessAccount businessAccount) throws SQLException{
+		
+		Connection connection = null;
+		
+		try{
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			
+			String sql = "INSERT INTO BUSINESS_ACCOUNT VALUES(seq_business_account.nextval,'"+ businessAccount.getCompanyName() +
+			"','"+ businessAccount.getAddress() +"','"+ businessAccount.getPhone() +"','"+ businessAccount.getEmail()+
+			"','"+ businessAccount.getApproved() +"','"+ businessAccount.getAccountTypeId() +"')";
+		
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);			
+			statement.close();
+		}finally{
+			connection.close();
+		}
+	}
+	
+	//Retrieves info from form
+	public BusinessAccount getBusinessAccountFromForm(HttpServletRequest request){
+		BusinessAccount one = new BusinessAccount();
+		one.setCompanyName(request.getParameter("companyName")); 
+		one.setAddress(request.getParameter("address"));
+		one.setPhone(request.getParameter("phone"));
+		one.setEmail(request.getParameter("email"));
+		one.setApproved(request.getParameter("approved").charAt(0));
+		one.setAccountTypeId(Integer.parseInt(request.getParameter("accountTypeId")));
+		return one;
+	}
+	
 	// ***********This method needs to be parameterized************
 	public void addWine(Wine wine){
 				//Creates insert statement

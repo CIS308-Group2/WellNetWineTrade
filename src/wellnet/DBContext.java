@@ -143,8 +143,8 @@ public class DBContext {
 		try{
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			
-			String sql = "INSERT INTO USER_ACCOUNT VALUES('"+ userAccount.getUserId() +"','"+ userAccount.getUsername() +"','"+ 
-															userAccount.getPswd() +"', seq_user_account.nextval)";
+			String sql = "INSERT INTO USER_ACCOUNT VALUES(seq_user_account.nextval,'"+ userAccount.getUsername() +"','"+ 
+															userAccount.getPswd() +"','"+ userAccount.getAccountId() +"')";
 		
 			// Creates a new statement and executes the SQL query
 			Statement statement = connection.createStatement();
@@ -160,10 +160,10 @@ public class DBContext {
 	//Retrieves info from form
 	public UserAccount getUserAccountFromForm(HttpServletRequest request){
 		UserAccount one = new UserAccount();
-		one.setUserId(Integer.parseInt(request.getParameter("userId"))); 
 		one.setUsername(request.getParameter("username"));
 		one.setPswd(request.getParameter("pswd"));
-		return one;
+		one.setAccountId(Integer.parseInt(request.getParameter("chosenAccount")));
+		return one;	
 	}
 	
 	//This method adds a business account to the database

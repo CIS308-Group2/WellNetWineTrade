@@ -1,27 +1,25 @@
 <%@ page import="wellnet.*, wellnet.dao.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
-<%@ page import="java.net.URL" %>
-<%@ page import="java.sql.*" %>
-
-<%Wine one = new Wine();%>
-<%DBContext dataAccess = new DBContext(); %>
-
-<!-- 
-Steve Simpson 21066092
-06/30/15
-CIS404-M308
-Assignment 7.1
--->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link href="index.css" rel="stylesheet" type="text/css" />
 
 </head>
+
+	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
+	
+<%
+		ArrayList<Integer> accountIds1 = one.getAccountIds();
+		request.setAttribute("accountIds", accountIds1);
+	
+%>
 
 <body>
 <div id ="wrapper">
@@ -31,7 +29,7 @@ Assignment 7.1
 
     <li><a href="index.html">Menu Page</a></li>
     <li><a href="initializeIndex.html">Create All Tables</a></li>
-    <li><a href="">Drop All Tables</a></li>
+    <li><a href="DropPage.jsp">Drop All Tables</a></li>
     <li><a href="insertIndex.html">A Form to Insert Data</a></li>
     <li><a href="">Table Data</a></li>
 </ul>
@@ -39,12 +37,9 @@ Assignment 7.1
 
 <div id ="rightcolumn">
     
-
-
 			<h2 align='center'>Enter the Wine Info</h2>
 			<form method='post' action='insertWine.jsp'>
-
-			
+		
 					<table class='table'>
 						<tr>
 							<td>Wine Name</td>
@@ -76,14 +71,16 @@ Assignment 7.1
 							<td><input type='text' name='pairingTastingNotes' id='pairingTastingNotes' /></td>
 						</tr>
 						
-						<!-- Account Id is system assigned by using sequence in DB. User should not be aware of it or be able to set it.
-							 In this case we should already have account ID because the user had to login to get to this page.
-							 The login page will need to store the user account and/or business account in the session to be retrieved by the proceeding pages.
 						<tr>
 							<td>Account ID</td>
-							<td><input type='text' name='accountId' id='accountId' /></td>
-						</tr>						
-						 -->
+							<td>
+								<select name="chosenAccount" id="account">
+									<c:forEach var="i" items="${accountIds}">
+										<option value="${i}">${i}</option>
+									</c:forEach>
+								</select> 
+							</td>
+						</tr>
 						
 						<tr>
 							<td></td>
@@ -95,21 +92,11 @@ Assignment 7.1
 <%
 if(request.getMethod().equals("POST")){ 
 
-	one.setName(request.getParameter("name"));
-	one.setYear(Integer.parseInt(request.getParameter("year")));
-	one.setType(request.getParameter("type"));
-	one.setStock(Integer.parseInt(request.getParameter("stock")));
-	one.setPromoMaterials(request.getParameter("promoMaterial"));
-	one.setPairingTastingNotes(request.getParameter("pairingTastingNotes"));
-	one.setAccountId(Integer.parseInt(request.getParameter("accountId")));
-	
-	dataAccess.addWine(one);
+	one.addWine(one.getWineFromForm(request));
 	
 }
-
-
 %>
-			
+			</p>
 
 	
 <div id ="footer">
@@ -121,7 +108,7 @@ if(request.getMethod().equals("POST")){
 <p>Managing Director: <a href="mailto:pauld@wellnet.au">Paul Evenson</a></p> 
 <p>&copy; Copyright 2015</p>
 
-<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine &amp; Wine Cellars</a></p>
+<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine & Wine Cellars</a></p>
 </div>
 </div>
 </div>

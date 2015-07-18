@@ -6,14 +6,12 @@ public class UserAccount {
 	private int userId = 0;
 	private String username = "";
 	private String pswd = "";
-	private String pswdSalt = "";
 	private int accountId = 0;
 	
 	public static String[] ColumnNames = {
 		"USER_ID",
 		"USERNAME",
-		"ENCRYPTED_PASSWORD",
-		"PASSWORD_SALT",
+		"ACCOUNT_PASSWORD",
 		"ACCOUNT_ID"
 	};
 	
@@ -27,7 +25,6 @@ public class UserAccount {
 		this.userId = userId;
 		this.username = username;
 		this.pswd = pswd;
-		this.pswdSalt = pswdSalt;
 		this.accountId = accountId;
 		
 	}
@@ -49,12 +46,6 @@ public class UserAccount {
 	}
 	public void setPswd(String pswd) {
 		this.pswd = pswd;
-	}
-	public String getPswdSalt() {
-		return pswdSalt;
-	}
-	public void setPswdSalt(String pswdSalt) {
-		this.pswdSalt = pswdSalt;
 	}
 	public int getAccountId() {
 		return accountId;

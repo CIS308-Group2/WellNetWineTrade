@@ -10,9 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import oracle.jdbc.driver.OracleDriver;
-import wellnet.dao.*;
+import wellnet.dao.UserAccount;
+import wellnet.dao.Wine;
+import wellnet.dao.WineTranslation;
+import wellnet.dao.WineryBio;
+import wellnet.dao.WineryBioTranslation;
 
 //use this class to establish a connection to the database
 public class DBContext {
@@ -22,12 +24,16 @@ public class DBContext {
 	private static String urlConnectionString = "";
 	private static String username = "";
 	private static String password = "";
-	//private Connection conn;
+	
 	/*
 	 * I have had trouble with class level connections in the past, i.e. they must be set 
 	 * to null at the end of each method or SQL exceptions may occur on their next use. This is
 	 * certainly only a concern if we are using a single instance of this class to execute multiple statements.
 	 * -Alex
+	 * 
+	 * I had forgotten to include the close() method when posting this class. However I like the idea of creating a new
+	 * connection for each method. That way we don't have to worry about closing it each time we use it outside this class.
+	 * -Jeff
 	 */
 
 	// Constructor
@@ -43,9 +49,7 @@ public class DBContext {
 			Class.forName(driver);
 		
 	}
-	
-	/**************Place methods that make database calls below.******************/
-	
+			
 	/**
 	 * In case we need to use the account ID for something.
 	 * @return the next int in the SEQ_ACCOUNT_TYPE sequence
@@ -83,7 +87,7 @@ public class DBContext {
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			
 			String sql = "INSERT INTO USER_ACCOUNT VALUES('"+ userAccount.getUserId() +"','"+ userAccount.getUsername() +"','"+ 
-															userAccount.getPswd() +"','"+ userAccount.getPswdSalt() +"','"+ userAccount.getAccountId() +"')";
+															userAccount.getPswd() +"','"+ userAccount.getAccountId() +"')";
 		
 			// Creates a new statement and executes the SQL query
 			Statement statement = connection.createStatement();

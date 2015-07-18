@@ -1,10 +1,7 @@
 <%@ page import="wellnet.*, wellnet.dao.*"%>
+<%@page import="java.util.ArrayList"%>
 
-<%@ page import="java.net.URL" %>
-<%@ page import="java.sql.*" %>
 
-<%UserAccount one = new UserAccount();%>
-<%DBContext dataAccess = new DBContext(); %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,7 +23,7 @@
 
     <li><a href="index.html">Menu Page</a></li>
     <li><a href="initializeIndex.html">Create All Tables</a></li>
-    <li><a href="">Drop All Tables</a></li>
+    <li><a href="DropPage.jsp">Drop All Tables</a></li>
     <li><a href="insertIndex.html">A Form to Insert Data</a></li>
     <li><a href="">Table Data</a></li>
 </ul>
@@ -53,19 +50,8 @@
 						
 						<tr>
 							<td>Password</td>
-							<td><input type='text' name='password' id='password' /></td>
-						</tr>						
-						
-						<tr>
-							<td>Password Salt</td>
-							<td><input type='text' name='passwordSalt' id='passwordSalt' /></td>
-						</tr>						
-						<!-- Account Id is system assigned by using sequence in DB. User should not be aware of it or be able to set it.
-						<tr>
-							<td>Account ID</td>
-							<td><input type='text' name='accountId' id='accountId' /></td>
-						</tr>						
-						 -->
+							<td><input type='text' name='pswd' id='pswd' /></td>
+						</tr>												
 						
 						<tr>
 							<td></td>
@@ -73,21 +59,14 @@
 						</tr>
 					</table>
 			</form>
+	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
 
 
 <%
 if(request.getMethod().equals("POST")){ 
 
-	one.setUserId(Integer.parseInt(request.getParameter("userId")));
-	one.setUsername(request.getParameter("username").toString());
-	one.setPswd(request.getParameter("password").toString());
-		
-	one.setAccountId(dataAccess.getNextAccountId());
-	
-	dataAccess.addUserAccount(one);
-	
+	one.addUserAccount(one.getUserAccountFromForm(request));
 }
-
 
 %>
 			</p>

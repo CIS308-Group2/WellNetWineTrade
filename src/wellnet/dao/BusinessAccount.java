@@ -70,6 +70,9 @@ public class BusinessAccount {
 	public boolean isApproved() {
 		return approved == 'Y' || approved == 'y';
 	}
+	public char getApproved() {
+		return approved;
+	}
 	public void setApproved(char approved) {
 		this.approved = approved;
 	}

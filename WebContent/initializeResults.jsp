@@ -24,7 +24,7 @@
 
 				<li><a href="index.html">Menu Page</a></li>
 				<li><a href="initializeIndex.html">Create All Tables</a></li>
-				<li><a href="">Drop All Tables</a></li>
+				<li><a href="DropPage.jsp">Drop All Tables</a></li>
 				<li><a href="insertIndex.html">A Form to Insert Data</a></li>
 				<li><a href="">Table Data</a></li>
 			</ul>

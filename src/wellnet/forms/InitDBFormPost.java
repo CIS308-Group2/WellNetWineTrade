@@ -30,7 +30,7 @@ public class InitDBFormPost extends HttpServlet {
 		try {
 			DBContext context = new DBContext();
 			
-			String message = "There was a problem creating and initializing the database. Please <a href='dropTables.jsp'>"
+			String message = "There was a problem creating and initializing the database. Please <a href='DropPage.jsp'>"
 					+ "Drop All Tables</a> and try again. The database may already exist.";
 			if(context.initDB()){
 				message = "The database was successfully created and initialized with data.";

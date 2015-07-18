@@ -146,6 +146,15 @@ public class DBContext {
 		}
 	}
 	
+	//Retrieves info from form
+	public UserAccount getUserAccountFromForm(HttpServletRequest request){
+		UserAccount one = new UserAccount();
+		one.setUserId(Integer.parseInt(request.getParameter("userId"))); 
+		one.setUsername(request.getParameter("username"));
+		one.setPswd(request.getParameter("pswd"));
+		return one;
+	}
+	
 	// ***********This method needs to be parameterized************
 	public void addWine(Wine wine){
 				//Creates insert statement

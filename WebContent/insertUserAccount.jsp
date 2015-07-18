@@ -1,5 +1,6 @@
 <%@ page import="wellnet.*, wellnet.dao.*"%>
 <%@page import="java.util.ArrayList"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
 
 
@@ -10,10 +11,18 @@
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link href="index.css" rel="stylesheet" type="text/css" />
 
 </head>
+
+	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
+
+<%
+		ArrayList<Integer> accountIds1 = one.getAccountIds();
+		request.setAttribute("accountIds", accountIds1);
+	
+%>
 
 <body>
 <div id ="wrapper">
@@ -39,28 +48,34 @@
 			
 					<table class='table'>
 						<tr>
-							<td>User ID</td>
-							<td><input type='text' name='userId' id='userId' /></td>
-						</tr>
-					
+						
 						<tr>
 							<td>User Name</td>
-							<td><input type='text' name='username' id='username' /></td>
+							<td><input type='text' name='username' id='username' required/></td>
 						</tr>
 						
 						<tr>
 							<td>Password</td>
-							<td><input type='text' name='pswd' id='pswd' /></td>
-						</tr>												
-						
+							<td><input type='text' name='pswd' id='pswd' required/></td>
+						</tr>
+
+						<tr>
+							<td>Account ID</td>
+							<td>
+								<select name="chosenAccount" id="account">
+									<c:forEach var="i" items="${accountIds}">
+										<option value="${i}">${i}</option>
+									</c:forEach>
+								</select> 
+							</td>
+						</tr>
+							
 						<tr>
 							<td></td>
 							<td><input type='submit' value='Enter'/></td>
 						</tr>
 					</table>
 			</form>
-	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
-
 
 <%
 if(request.getMethod().equals("POST")){ 
@@ -69,7 +84,7 @@ if(request.getMethod().equals("POST")){
 }
 
 %>
-		
+			</p>
 
 	
 <div id ="footer">
@@ -81,7 +96,7 @@ if(request.getMethod().equals("POST")){
 <p>Managing Director: <a href="mailto:pauld@wellnet.au">Paul Evenson</a></p> 
 <p>&copy; Copyright 2015</p>
 
-<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine &amp; Wine Cellars</a></p>
+<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine & Wine Cellars</a></p>
 </div>
 </div>
 </div>

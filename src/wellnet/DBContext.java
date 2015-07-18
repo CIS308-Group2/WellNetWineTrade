@@ -225,6 +225,19 @@ public class DBContext {
 					}
 				}
 			}
+	//This method works with th einsertWine.jsp page to retrieve user input		
+	public Wine getWineFromForm(HttpServletRequest request){
+		Wine one = new Wine();
+		one.setName(request.getParameter("name"));
+		one.setYear(Integer.parseInt(request.getParameter("year")));
+		one.setType(request.getParameter("type"));
+		one.setStock(Integer.parseInt(request.getParameter("stock")));
+		one.setPromoMaterials(request.getParameter("promoMaterial"));
+		one.setPairingTastingNotes(request.getParameter("pairingTastingNotes"));
+		one.setAccountId(Integer.parseInt(request.getParameter("chosenAccount")));
+		return one;
+	}
+			
 	// ***********This method needs to be parameterized************
 	public void addBio(WineryBio wineryBio) throws SQLException{
 		String sql = "INSERT INTO WINERY_BIO VALUES('"+ wineryBio.getAccountId() +"','"+ wineryBio.getBio() +"')";

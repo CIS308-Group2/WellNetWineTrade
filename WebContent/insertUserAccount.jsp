@@ -13,7 +13,7 @@
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="index.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -90,7 +90,7 @@ if(request.getMethod().equals("POST")){
 
 
 %>
-			</p>
+		
 
 	
 <div id ="footer">
@@ -102,7 +102,7 @@ if(request.getMethod().equals("POST")){
 <p>Managing Director: <a href="mailto:pauld@wellnet.au">Paul Evenson</a></p> 
 <p>&copy; Copyright 2015</p>
 
-<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine & Wine Cellars</a></p>
+<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine &amp; Wine Cellars</a></p>
 </div>
 </div>
 </div>

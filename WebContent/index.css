@@ -1,4 +1,4 @@
-body { 	background: url(winecellar.jpg);
+body { 	background: url(images/winecellar.jpg);
        	color: #000000;
 	margin : 0;
 	padding: 0;
@@ -130,4 +130,25 @@ body { 	background: url(winecellar.jpg);
 .table {
 	margin-left: auto;
     margin-right: auto;
+}
+
+.form-section{
+	padding: 1em;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.button{
+	margin: 1em auto;
+	width: 80px;	
+}
+
+.button > input{
+	width: 100%;
+}
+
+.result-message{
+	width: 80%;
+	margin: 0 auto;
+	padding: 1em 0;
 }

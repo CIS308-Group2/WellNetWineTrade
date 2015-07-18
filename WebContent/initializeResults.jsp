@@ -1,7 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,7 +13,7 @@
 
 <body>
 	<div id="wrapper">
-		<div id="top">
+<div id="top">
 			<div id="topimg">
 				<img src="images/title.jpg" width="765" height="225" alt="Bottles" />
 			</div>
@@ -30,20 +31,8 @@
 		</div>
 
 		<div id="rightcolumn">
-
-
-
-			<h2 align='center'>Create and populate the database.</h2>
-			<form class="form-section" action="InitDBFormPost" method="post">
-				<span>Create the database and populate the database with initial data</span>
-				<div class="button">
-					<input type="submit" value="Go" />
-				</div>
-			</form>
-
-
-
-
+		<h2 align='center'>Sql statement results</h2>
+			<div class="result-message">${message }</div>
 
 			<div id="footer">
 				<p>

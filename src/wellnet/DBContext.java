@@ -1,11 +1,8 @@
 package wellnet;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,8 +28,8 @@ public class DBContext {
 	private static String urlConnectionString = "";
 	private static String username = "";
 	private static String password = "";
-	private final String createSql = "/sqlScripts/WellnetCreate.sql";
-	private final String intiSql = "/sqlScripts/initData.sql";
+	private final String createSql = "WellnetCreate.sql";
+	private final String intiSql = "initData.sql";
 	
 	/*
 	 * I have had trouble with class level connections in the past, i.e. they must be set 
@@ -59,43 +56,52 @@ public class DBContext {
 		
 	}
 	
-	public String getScriptFilePath(String action){
-		String filePath = "";
-		switch(action.toLowerCase()){
-		case "create":
-			filePath = this.createSql;
-			break;
-		case "init":
-			filePath = this.createSql;
-			break;
+	public Boolean initDB() throws URISyntaxException, SQLException, IOException{
+		
+		Boolean result = false;
+		if(this.executeSqlFile(createSql)){
+			result = this.executeSqlFile(intiSql);
 		}
-		return filePath;
+		return result;
+		
 	}
 	
-	public int[] executeSqlFile(String filePath) throws URISyntaxException, SQLException, IOException{
+	public Boolean executeSqlFile(String filePath) throws SQLException {
 		Connection connection = null;
 		String line = null;
-		
+		Boolean result = false;
 		StringBuffer stringBuffer = new StringBuffer();
 		try{
-			File sqlFile = new File(new URI(filePath));
-			FileReader fileReader = new FileReader(sqlFile);
-			BufferedReader reader = new BufferedReader(fileReader);
-			while((line = reader.readLine()) != null){
-				stringBuffer.append(String.format("%s\n", line));
-			}
 			
+			InputStreamReader fileReader = new InputStreamReader(this.getClass().getResourceAsStream(filePath));
+			
+			BufferedReader reader = new BufferedReader(fileReader);
+			
+			while((line = reader.readLine()) != null){
+				stringBuffer.append(line);
+			}
+			String[] sqlStatements = stringBuffer.toString().split(";");
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
-			PreparedStatement preparedStatement = connection.prepareStatement(stringBuffer.toString());
-			int[] results = preparedStatement.executeBatch();
+			
+			for(String sql : sqlStatements){
+				
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.executeUpdate();
+											
+			}
+						
 			reader.close();
 			fileReader.close();
-			return results;
-		}finally{
+			result = true;
+		} catch (IOException | SQLException e) {
+			result = false;
+			e.printStackTrace();
+		}
+		finally{
 			
 			connection.close();
 		}
-		
+		return result;
 	}
 	
 	/**

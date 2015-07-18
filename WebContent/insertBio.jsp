@@ -1,17 +1,7 @@
 <%@ page import="wellnet.*, wellnet.dao.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
-<%@ page import="java.net.URL" %>
-<%@ page import="java.sql.*" %>
-
-<%WineryBio one = new WineryBio();%>
-<%DBContext dataAccess = new DBContext(); %>
-
-<!-- 
-Steve Simpson 21066092
-06/30/15
-CIS404-M308
-Assignment 7.1
--->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
@@ -23,6 +13,15 @@ Assignment 7.1
 
 </head>
 
+	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
+	
+<%
+		ArrayList<Integer> accountIds1 = one.getAccountIds();
+		request.setAttribute("accountIds", accountIds1);
+	
+
+%>
+
 <body>
 <div id ="wrapper">
 
@@ -31,7 +30,7 @@ Assignment 7.1
 
     <li><a href="index.html">Menu Page</a></li>
     <li><a href="initializeIndex.html">Create All Tables</a></li>
-    <li><a href="">Drop All Tables</a></li>
+    <li><a href="DropPage.jsp">Drop All Tables</a></li>
     <li><a href="insertIndex.html">A Form to Insert Data</a></li>
     <li><a href="">Table Data</a></li>
 </ul>
@@ -42,18 +41,21 @@ Assignment 7.1
 
 
 			<h2 align='center'>Enter the Winery Bio</h2>
-			<form method='post' action='insert.jsp'>
+			<form method='post' action='insertBio.jsp'>
 
 			
 					<table class='table'>
-						<!-- Account Id is system assigned by using sequence in DB. User should not be aware of it or be able to set it.
-							 In this case we should already have account ID because the user had to login to get to this page.
-							 The login page will need to store the user account and/or business account in the session to be retrieved by the proceeding pages.
+
 						<tr>
 							<td>Account ID</td>
-							<td><input type='text' name='accountId' id='accountId' /></td>
-						</tr>						
-						 -->
+							<td>
+								<select name="chosenAccount" id="account">
+									<c:forEach var="i" items="${accountIds}">
+										<option value="${i}">${i}</option>
+									</c:forEach>
+								</select> 
+							</td>
+						</tr>
 					
 						<tr>
 							<td>Bio</td>
@@ -71,15 +73,9 @@ Assignment 7.1
 <%
 if(request.getMethod().equals("POST")){ 
 
-
-	one.setAccountId(Integer.parseInt(request.getParameter("accountId")));
-	one.setBio(request.getParameter("bio"));
-	
-	dataAccess.addBio(one);
+	one.addBio(one.getWineryBioFromForm(request));
 	
 }
-
-
 %>
 			</p>
 

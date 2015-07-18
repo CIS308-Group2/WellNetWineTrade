@@ -17,11 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import wellnet.dao.UserAccount;
-import wellnet.dao.Wine;
-import wellnet.dao.WineTranslation;
-import wellnet.dao.WineryBio;
-import wellnet.dao.WineryBioTranslation;
+import javax.servlet.http.HttpServletRequest;
+
+import wellnet.dao.*;
 
 //use this class to establish a connection to the database
 public class DBContext {
@@ -92,8 +90,9 @@ public class DBContext {
 			fileReader.close();
 			return results;
 		}finally{
-			
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 		
 	}
@@ -122,7 +121,9 @@ public class DBContext {
 			
 			return accountId;
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -142,7 +143,9 @@ public class DBContext {
 			statement.executeUpdate(sql);			
 			statement.close();
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -172,7 +175,9 @@ public class DBContext {
 			statement.executeUpdate(sql);			
 			statement.close();
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -189,7 +194,7 @@ public class DBContext {
 	}
 	
 	// ***********This method needs to be parameterized************
-	public void addWine(Wine wine){
+	public void addWine(Wine wine) throws SQLException{
 				//Creates insert statement
 				String sql = "INSERT INTO WINE VALUES(seq_wine.nextval,'"+ wine.getName() +"','"+ wine.getYear() +"','"+ 
 														wine.getType() +"','"+ wine.getStock()+"','"+ wine.getPromoMaterials() +"','"+ 
@@ -206,10 +211,14 @@ public class DBContext {
 				} catch (SQLException e) {
 					e.printStackTrace();
 					//DisplayErrorMessage("There was an error executing the query on the database");
+				}finally{
+					if(!connection.isClosed()){
+						connection.close();
+					}
 				}
 			}
 	// ***********This method needs to be parameterized************
-	public void addBio(WineryBio wineryBio){
+	public void addBio(WineryBio wineryBio) throws SQLException{
 		String sql = "INSERT INTO WINERY_BIO VALUES('"+ wineryBio.getAccountId() +"','"+ wineryBio.getBio() +"')";
 		
 		Connection connection = null;
@@ -223,6 +232,10 @@ public class DBContext {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//DisplayErrorMessage("There was an error executing the query on the database");
+		}finally{
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -236,22 +249,29 @@ public class DBContext {
 	}
 	
 	//This method creates a list of account IDs so it can be used on forms, like the insertBio.jsp
-	public ArrayList<Integer> getAccountIds() {
+	public ArrayList<Integer> getAccountIds() throws SQLException {
 		ArrayList<Integer> accountIds = new ArrayList<Integer>();
 		String sql = "SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT";
-
+		Connection connection = null;
+		
 		try {
-
-			this.statement = conn.createStatement();
-			ResultSet result = this.statement.executeQuery(sql);
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
 
 			while (result.next()) {
 				accountIds.add(result.getInt("ACCOUNT_ID"));
 			}
 
-			this.statement.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 
 		return accountIds;
@@ -295,7 +315,9 @@ public class DBContext {
 			return fillBioList(rs, tableName);
 				
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -330,7 +352,9 @@ public class DBContext {
 			return fillWineList(rs, tableName);
 				
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	
@@ -348,7 +372,7 @@ public class DBContext {
 			
 			while(rs.next()){
 				wineryBio.add(new WineryBioTranslation(rs.getInt(WineryBioTranslation.ColumnNames[0]),rs.getInt(WineryBioTranslation.ColumnNames[1]),
-														rs.getString(WineryBioTranslation.ColumnNames[1]), rs.getString(WineryBioTranslation.ColumnNames[3])));
+														rs.getString(WineryBioTranslation.ColumnNames[2]), rs.getString(WineryBioTranslation.ColumnNames[3])));
 			}
 			
 		}else{
@@ -421,7 +445,9 @@ public class DBContext {
 			return returnSql.toString();
 
 		}finally{
-			connection.close();
+			if(!connection.isClosed()){
+				connection.close();
+			}
 		}
 	}
 	

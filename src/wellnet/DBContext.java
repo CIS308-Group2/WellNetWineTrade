@@ -135,7 +135,7 @@ public class DBContext {
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			
 			String sql = "INSERT INTO USER_ACCOUNT VALUES('"+ userAccount.getUserId() +"','"+ userAccount.getUsername() +"','"+ 
-															userAccount.getPswd() +"','"+ userAccount.getAccountId() +"')";
+															userAccount.getPswd() +"', seq_user_account.nextval)";
 		
 			// Creates a new statement and executes the SQL query
 			Statement statement = connection.createStatement();

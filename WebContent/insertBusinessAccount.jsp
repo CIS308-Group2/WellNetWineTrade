@@ -10,7 +10,7 @@
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link href="index.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -30,28 +30,46 @@
 </div>
 
 <div id ="rightcolumn">
-    
-
 
 			<h2 align='center'>Enter the User Account info</h2>
-			<form method='post' action='insertUserAccount.jsp'>
+			<form method='post' action='insertBusinessAccount.jsp'>
 
 			
 					<table class='table'>
 						<tr>
-							<td>User ID</td>
-							<td><input type='text' name='userId' id='userId' /></td>
+							<td>Company Name</td>
+							<td><input type='text' name='companyName' id='companyName' /></td>
 						</tr>
 					
 						<tr>
-							<td>User Name</td>
-							<td><input type='text' name='username' id='username' /></td>
+							<td>Address</td>
+							<td><input type='text' name='address' id='address' /></td>
 						</tr>
 						
 						<tr>
-							<td>Password</td>
-							<td><input type='text' name='pswd' id='pswd' /></td>
-						</tr>												
+							<td>Phone Number</td>
+							<td><input type='text' name='phone' id='phone' /></td>
+						</tr>
+
+						<tr>
+							<td>Email</td>
+							<td><input type='text' name='email' id='email' /></td>
+						</tr>
+
+						<tr>
+							<td>Is business approved?</td>
+							<td>
+								<select name='approved' id='approved'>
+										<option value='N'>N</option>
+										<option value='Y'>Y</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td>Select Account Type</td>
+							<td><input type='text' name='accountTypeId' id='accountTypeId' /></td>
+						</tr>						
 						
 						<tr>
 							<td></td>
@@ -59,17 +77,17 @@
 						</tr>
 					</table>
 			</form>
+			
 	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
-
 
 <%
 if(request.getMethod().equals("POST")){ 
 
-	one.addUserAccount(one.getUserAccountFromForm(request));
+	one.addBusinessAccount(one.getBusinessAccountFromForm(request));
 }
 
 %>
-		
+			</p>
 
 	
 <div id ="footer">
@@ -81,7 +99,7 @@ if(request.getMethod().equals("POST")){
 <p>Managing Director: <a href="mailto:pauld@wellnet.au">Paul Evenson</a></p> 
 <p>&copy; Copyright 2015</p>
 
-<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine &amp; Wine Cellars</a></p>
+<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine & Wine Cellars</a></p>
 </div>
 </div>
 </div>

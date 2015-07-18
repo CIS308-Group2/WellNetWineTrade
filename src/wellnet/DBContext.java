@@ -141,7 +141,7 @@ public class DBContext {
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			
 			String sql = "INSERT INTO USER_ACCOUNT VALUES('"+ userAccount.getUserId() +"','"+ userAccount.getUsername() +"','"+ 
-															userAccount.getPswd() +"','"+ userAccount.getAccountId() +"')";
+															userAccount.getPswd() +"', seq_user_account.nextval)";
 		
 			// Creates a new statement and executes the SQL query
 			Statement statement = connection.createStatement();
@@ -150,6 +150,48 @@ public class DBContext {
 		}finally{
 			connection.close();
 		}
+	}
+	
+	//Retrieves info from form
+	public UserAccount getUserAccountFromForm(HttpServletRequest request){
+		UserAccount one = new UserAccount();
+		one.setUserId(Integer.parseInt(request.getParameter("userId"))); 
+		one.setUsername(request.getParameter("username"));
+		one.setPswd(request.getParameter("pswd"));
+		return one;
+	}
+	
+	//This method adds a business account to the database
+	public void addBusinessAccount(BusinessAccount businessAccount) throws SQLException{
+		
+		Connection connection = null;
+		
+		try{
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			
+			String sql = "INSERT INTO BUSINESS_ACCOUNT VALUES(seq_business_account.nextval,'"+ businessAccount.getCompanyName() +
+			"','"+ businessAccount.getAddress() +"','"+ businessAccount.getPhone() +"','"+ businessAccount.getEmail()+
+			"','"+ businessAccount.getApproved() +"','"+ businessAccount.getAccountTypeId() +"')";
+		
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);			
+			statement.close();
+		}finally{
+			connection.close();
+		}
+	}
+	
+	//Retrieves info from form
+	public BusinessAccount getBusinessAccountFromForm(HttpServletRequest request){
+		BusinessAccount one = new BusinessAccount();
+		one.setCompanyName(request.getParameter("companyName")); 
+		one.setAddress(request.getParameter("address"));
+		one.setPhone(request.getParameter("phone"));
+		one.setEmail(request.getParameter("email"));
+		one.setApproved(request.getParameter("approved").charAt(0));
+		one.setAccountTypeId(Integer.parseInt(request.getParameter("accountTypeId")));
+		return one;
 	}
 	
 	// ***********This method needs to be parameterized************
@@ -188,6 +230,37 @@ public class DBContext {
 			e.printStackTrace();
 			//DisplayErrorMessage("There was an error executing the query on the database");
 		}
+	}
+	
+	//This method retrieves info entered in the insertBio.jsp form
+	public WineryBio getWineryBioFromForm(HttpServletRequest request){
+		WineryBio one = new WineryBio();
+		one.setAccountId(Integer.parseInt(request.getParameter("chosenAccount"))); 
+		one.setBio(request.getParameter("bio"));
+		return one;
+		
+	}
+	
+	//This method creates a list of account IDs so it can be used on forms, like the insertBio.jsp
+	public ArrayList<Integer> getAccountIds() {
+		ArrayList<Integer> accountIds = new ArrayList<Integer>();
+		String sql = "SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT";
+
+		try {
+
+			this.statement = conn.createStatement();
+			ResultSet result = this.statement.executeQuery(sql);
+
+			while (result.next()) {
+				accountIds.add(result.getInt("ACCOUNT_ID"));
+			}
+
+			this.statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return accountIds;
 	}
 	
 	/**

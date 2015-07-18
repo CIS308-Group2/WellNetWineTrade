@@ -11,11 +11,19 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 	<div id="wrapper">
 		<div id="top">
 			<div id="topimg">
 				<img src="images/title.jpg" width="765" height="225" alt="Bottles" />
 			</div>
+=======
+<div id ="wrapper">
+<div id ="top">
+<div id ="topimg">
+<img src="Title.jpg" width = "765" height = "225" alt = "Bottles "/>
+</div>
+>>>>>>> 7fd1172006abaa5fc220a8a83fcc1568e98bd967
 
 		</div>
 
@@ -25,23 +33,13 @@
 
 				<li><a href="index.html">Menu Page</a></li>
 				<li><a href="initializeIndex.html">Create All Tables</a></li>
-				<li><a href="">Drop All Tables</a></li>
+    <li><a href="DropPage.jsp">Drop All Tables</a></li>
 				<li><a href="insertIndex.html">A Form to Insert Data</a></li>
 				<li><a href="">Table Data</a></li>
 			</ul>
 		</div>
 
-<<<<<<< HEAD
 		<div id="rightcolumn">
-=======
-    <li><a href="index.html">Menu Page</a></li>
-    <li><a href="initializeIndex.html">Create All Tables</a></li>
-    <li><a href="DropPage.jsp">Drop All Tables</a></li>
-    <li><a href="insertIndex.html">A Form to Insert Data</a></li>
-    <li><a href="">Table Data</a></li>
-</ul>
-</div>
->>>>>>> 8922c648be276087950fdc04e8aefc85aa1b4ac0
 
 			<p>Wellnet Australia Pty Ltd has developed the Wellnet Wine Trade
 				Management System. The system assists in the procurement, promotion
@@ -55,17 +53,10 @@
 
 
 
-<<<<<<< HEAD
 			<div id="footer">
-				<p>
-					<a href="">Winery Portal</a> <a href="">Importer Portal</a>
-				</p>
-=======
-<div id ="footer">
 <p><a href="wineryportal.html">Winery Portal</a>
 <a href="importerportal.html">Importer Portal</a>
-</p>
->>>>>>> 8922c648be276087950fdc04e8aefc85aa1b4ac0
+				</p>
 
 
 				<p>

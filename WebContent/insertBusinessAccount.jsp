@@ -31,29 +31,29 @@
 
 <div id ="rightcolumn">
 
-			<h2 align='center'>Enter the User Account info</h2>
+			<h2 align='center'>Enter the Business Account info</h2>
 			<form method='post' action='insertBusinessAccount.jsp'>
 
 			
 					<table class='table'>
 						<tr>
 							<td>Company Name</td>
-							<td><input type='text' name='companyName' id='companyName' /></td>
+							<td><input type='text' name='companyName' id='companyName' required/></td>
 						</tr>
 					
 						<tr>
 							<td>Address</td>
-							<td><input type='text' name='address' id='address' /></td>
+							<td><input type='text' name='address' id='address' required/></td>
 						</tr>
 						
 						<tr>
 							<td>Phone Number</td>
-							<td><input type='text' name='phone' id='phone' /></td>
+							<td><input type='text' name='phone' id='phone' required/></td>
 						</tr>
 
 						<tr>
 							<td>Email</td>
-							<td><input type='text' name='email' id='email' /></td>
+							<td><input type='text' name='email' id='email' required/></td>
 						</tr>
 
 						<tr>
@@ -68,7 +68,7 @@
 
 						<tr>
 							<td>Select Account Type</td>
-							<td><input type='text' name='accountTypeId' id='accountTypeId' /></td>
+							<td><input type='text' name='accountTypeId' id='accountTypeId' required/></td>
 						</tr>						
 						
 						<tr>

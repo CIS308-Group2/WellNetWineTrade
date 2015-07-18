@@ -193,6 +193,37 @@ public class DBContext {
 		}
 	}
 	
+	//This method retrieves info entered in the insertBio.jsp form
+	public WineryBio getWineryBioFromForm(HttpServletRequest request){
+		WineryBio one = new WineryBio();
+		one.setAccountId(Integer.parseInt(request.getParameter("chosenAccount"))); 
+		one.setBio(request.getParameter("bio"));
+		return one;
+		
+	}
+	
+	//This method creates a list of account IDs so it can be used on forms, like the insertBio.jsp
+	public ArrayList<Integer> getAccountIds() {
+		ArrayList<Integer> accountIds = new ArrayList<Integer>();
+		String sql = "SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT";
+
+		try {
+
+			this.statement = conn.createStatement();
+			ResultSet result = this.statement.executeQuery(sql);
+
+			while (result.next()) {
+				accountIds.add(result.getInt("ACCOUNT_ID"));
+			}
+
+			this.statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return accountIds;
+	}
+	
 	/**
 	 * Returning a list is likely not necessary.
 	 * @param accountId

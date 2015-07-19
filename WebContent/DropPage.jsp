@@ -15,24 +15,8 @@
 
 <body>
 <div id ="wrapper">
-<div id ="top">
-<div id ="topimg">
-<img src="images/title.jpg" width = "765" height = "225" alt = "Bottles "/>
-</div>
-
-</div>
-
-
-<div id ="leftcolumn">
-<ul class="navList">
-
-    <li><a href="index.html">Menu Page</a></li>
-    <li><a href="">Create All Tables</a></li>
-    <li><a href="">Drop All Tables</a></li>
-    <li><a href="">A Form to Insert Data</a></li>
-    <li><a href="">Table Data</a></li>
-</ul>
-</div>
+	
+	<%@ include file="titleImageAndNav.jsp" %>
 
 <div id ="rightcolumn">
 
@@ -63,6 +47,9 @@ if(request.getMethod().equals("POST")){
 %>
        
 </div>
+
+<%@ include file="footer.jsp" %>
+
 </body>
 
 <html>

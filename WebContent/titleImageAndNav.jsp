@@ -9,6 +9,6 @@
 			<li><a href="initializeIndex.jsp">Create All Tables</a></li>
    			<li><a href="DropPage.jsp">Drop All Tables</a></li>
 			<li><a href="insertIndex.jsp">A Form to Insert Data</a></li>
-			<li><a href="">Table Data</a></li>
+			<li><a href="displayWineryInfo.jsp">Table Data</a></li>
 		</ul>
 	</div>

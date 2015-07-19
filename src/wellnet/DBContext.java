@@ -36,20 +36,21 @@ public class DBContext {
 	private static String dropSql = "";
 
 	// Constructor
-	public DBContext() throws IOException, SQLException, ClassNotFoundException {
+	public DBContext() throws IOException, ClassNotFoundException {
 		
 			// Uses the jbdc driver to create a new connection to the database			
-			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("../config.properties"));
-			urlConnectionString = properties.getProperty("jdbc.connectionURL");
-			username = properties.getProperty("jdbc.username");
-			password = properties.getProperty("jdbc.password");
-			driver = properties.getProperty("jdbc.driver");
+				properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("../config.properties"));
+				urlConnectionString = properties.getProperty("jdbc.connectionURL");
+				username = properties.getProperty("jdbc.username");
+				password = properties.getProperty("jdbc.password");
+				driver = properties.getProperty("jdbc.driver");
+				
+				Class.forName(driver);
+				
+				createSql = properties.getProperty("sql.create");
+				initSql = properties.getProperty("sql.init");
+				dropSql = properties.getProperty("sql.drop");
 			
-			Class.forName(driver);
-			
-			createSql = properties.getProperty("sql.create");
-			initSql = properties.getProperty("sql.init");
-			dropSql = properties.getProperty("sql.drop");
 			
 	}
 	
@@ -268,6 +269,35 @@ public class DBContext {
 		
 	}
 	
+	public ArrayList<Integer> getWineryAccountIds() throws SQLException {
+		ArrayList<Integer> accountIds = new ArrayList<Integer>();
+		String sql = "SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE ACCOUNT_TYPE_ID IN "
+				+ "(SELECT ACCOUNT_TYPE_ID FROM ACCOUNT_TYPE WHERE ACCOUNT_TYPE = 'WINERY')";
+		Connection connection = null;
+		
+		try {
+			connection = DriverManager.getConnection(urlConnectionString, username, password);
+			// Creates a new statement and executes the SQL query
+			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+
+			while (result.next()) {
+				accountIds.add(result.getInt("ACCOUNT_ID"));
+			}
+
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(!connection.isClosed()){
+				connection.close();
+			}
+		}
+
+		return accountIds;
+	}
+	
 	//This method creates a list of account IDs so it can be used on forms, like the insertBio.jsp
 	public ArrayList<Integer> getAccountIds() throws SQLException {
 		ArrayList<Integer> accountIds = new ArrayList<Integer>();
@@ -314,7 +344,7 @@ public class DBContext {
 			StringBuilder selectStatement = new StringBuilder();
 			String tableName = isEnglish ? "WINERY_BIO" : "BIO_TRANSLATION"; 
 			
-			selectStatement.append(buildSqlSelectFromStatement(tableName));
+			selectStatement.append("SELECT * FROM ").append(tableName).append(" ");
 			
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			PreparedStatement preparedStatement;
@@ -332,7 +362,14 @@ public class DBContext {
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			return fillBio(rs, tableName);
+			WineryBio wineBio = null;
+			
+			while(rs.next()){
+				
+				wineBio = fillBio(rs, tableName);
+			}
+			
+			return wineBio;
 				
 		}finally{
 			if(!connection.isClosed()){
@@ -351,7 +388,7 @@ public class DBContext {
 			StringBuilder selectStatement = new StringBuilder();
 			String tableName = isEnglish ? "WINE" : "WINE_TRANSLATION"; 
 			
-			selectStatement.append(buildSqlSelectFromStatement(tableName));
+			selectStatement.append("SELECT * FROM ").append(tableName).append(" ");
 			
 			connection = DriverManager.getConnection(urlConnectionString, username, password);
 			PreparedStatement preparedStatement;
@@ -428,66 +465,6 @@ public class DBContext {
 		return wineStock;
 			
 	}
-	
-	/**
-	 * This method was just me toying with Oracle. We can delete and use the static
-	 * column names in each class if it gives us any problems.
-	 * @param tableName
-	 * @return String of SELECT statement with all columns and FROM table
-	 * @throws SQLException
-	 */
-	private String buildSqlSelectFromStatement(String tableName) throws SQLException{
-
-		Connection connection = null;
 		
-		try{
-			
-			connection = DriverManager.getConnection(urlConnectionString, username, password);
-			
-			String selectColumns = "SELECT COLUMN_NAME FROM USER_TAB_COLS WHERE TABLE_NAME = ? ";
-			PreparedStatement preparedStatement = connection.prepareStatement(selectColumns);
-			preparedStatement.setString(1, tableName);
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			
-			StringBuilder returnSql = new StringBuilder("SELECT ");
-			
-			while(rs.next()){
-				returnSql.append(rs.getString("COLUMN_NAME")).append(" ");
-			}
-			
-			returnSql.append("FROM ").append(tableName).append(" ");
-			
-	
-			return returnSql.toString();
-
-		}finally{
-			if(!connection.isClosed()){
-				connection.close();
-			}
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

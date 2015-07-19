@@ -12,7 +12,7 @@
 <link href="index.css" rel="stylesheet" type="text/css" />
 
 </head>
-
+<%@ include file="NoCache.jsp" %>
 	<jsp:useBean id="one" class="wellnet.DBContext" ></jsp:useBean>
 	
 <%

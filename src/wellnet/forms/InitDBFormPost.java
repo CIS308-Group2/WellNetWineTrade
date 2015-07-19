@@ -19,7 +19,9 @@ import wellnet.DBContext;
 @WebServlet("/InitDBFormPost")
 public class InitDBFormPost extends HttpServlet {
 
-	
+	private static final long serialVersionUID = 6772823439096439856L;
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

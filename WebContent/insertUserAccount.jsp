@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
+<%@ include file="NoCache.jsp" %>
 <title>Wellnet</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -38,7 +38,6 @@
 
 			
 					<table class='table'>
-						<tr>
 						
 						<tr>
 							<td>User Name</td>

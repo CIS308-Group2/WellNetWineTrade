@@ -12,6 +12,16 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+td {
+  padding: 0.25rem;
+  text-align: inherit;
+}
+
 #wrapper { 
 	background-color: #381C08;
 	color: #000000;
@@ -78,7 +88,10 @@ body {
 	vertical-align: text-bottom;
 }
 
-
+.inputLabel {
+  text-align: right;
+  font-weight: 0.85em;
+}
 
 .navList {	
 	padding: 0 1px 1px;
@@ -120,8 +133,7 @@ body {
  	background: #cc0000;
 }
 
-.copyright { font-style: italic;
-}
+.copyright { font-style: italic; }
 
 .p1 {		
 	margin-left: 20px;
@@ -152,8 +164,8 @@ body {
 }	
 
 .table {
-	margin-left: auto;
-    margin-right: auto;
+  right-margin: 255px;
+  width: 100%;
 }
 
 .form-section{
@@ -175,4 +187,17 @@ body {
 	width: 80%;
 	margin: 0 auto;
 	padding: 1em 0;
+}
+
+.bio {
+	font-weight: bold;
+  	color: #101050;
+}
+
+.wines {
+	font-color: #101050;
+}
+
+.content-cushion {
+	padding: 2em 5em;
 }

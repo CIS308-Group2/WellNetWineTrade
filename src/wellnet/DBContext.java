@@ -30,19 +30,9 @@ public class DBContext {
 	private static String urlConnectionString = "";
 	private static String username = "";
 	private static String password = "";
-	private final String createSql = "WellnetCreate.sql";
-	private final String intiSql = "initData.sql";
-	
-	/*
-	 * I have had trouble with class level connections in the past, i.e. they must be set 
-	 * to null at the end of each method or SQL exceptions may occur on their next use. This is
-	 * certainly only a concern if we are using a single instance of this class to execute multiple statements.
-	 * -Alex
-	 * 
-	 * I had forgotten to include the close() method when posting this class. However I like the idea of creating a new
-	 * connection for each method. That way we don't have to worry about closing it each time we use it outside this class.
-	 * -Jeff
-	 */
+	private static String createSql = "";
+	private static String initSql = "";
+	private static String dropSql = "";
 
 	// Constructor
 	public DBContext() throws IOException, SQLException, ClassNotFoundException {
@@ -55,17 +45,25 @@ public class DBContext {
 			driver = properties.getProperty("jdbc.driver");
 			
 			Class.forName(driver);
-		
+			
+			createSql = properties.getProperty("sql.create");
+			initSql = properties.getProperty("sql.init");
+			dropSql = properties.getProperty("sql.drop");
+			
 	}
 	
 	public Boolean initDB() throws URISyntaxException, SQLException, IOException{
 		
 		Boolean result = false;
 		if(this.executeSqlFile(createSql)){
-			result = this.executeSqlFile(intiSql);
+			result = this.executeSqlFile(initSql);
 		}
 		return result;
 		
+	}
+	
+	public boolean dropDB() throws SQLException{
+		return executeSqlFile(dropSql);
 	}
 	
 	public Boolean executeSqlFile(String filePath) throws SQLException {

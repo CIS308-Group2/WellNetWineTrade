@@ -1,7 +1,7 @@
 <%@ page import="wellnet.*, wellnet.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
@@ -24,16 +24,7 @@
 <body>
 <div id ="wrapper">
 
-<div id ="leftcolumn">
-<ul class="navList">
-
-    <li><a href="index.html">Menu Page</a></li>
-    <li><a href="initializeIndex.html">Create All Tables</a></li>
-    <li><a href="DropPage.jsp">Drop All Tables</a></li>
-    <li><a href="insertIndex.html">A Form to Insert Data</a></li>
-    <li><a href="">Table Data</a></li>
-</ul>
-</div>
+	<%@ include file="titleImageAndNav.jsp" %>
 
 <div id ="rightcolumn">
     
@@ -96,21 +87,11 @@ if(request.getMethod().equals("POST")){
 	
 }
 %>
-			</p>
 
-	
-<div id ="footer">
-<p><a href="">Winery Portal</a>
-<a href="">Importer Portal</a>
-</p>
-
-
-<p>Managing Director: <a href="mailto:pauld@wellnet.au">Paul Evenson</a></p> 
-<p>&copy; Copyright 2015</p>
-
-<p>Photos courtesy of <a href="http://www.yadkinvalleywineblog.com/">Wine & Wine Cellars</a></p>
 </div>
-</div>
+
+<%@ include file="footer.jsp" %>
+
 </div>
 </body>
 </html>			

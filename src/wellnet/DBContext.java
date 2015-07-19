@@ -1,12 +1,8 @@
 package wellnet;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +16,12 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import wellnet.dao.*;
+import wellnet.dao.BusinessAccount;
+import wellnet.dao.UserAccount;
+import wellnet.dao.Wine;
+import wellnet.dao.WineTranslation;
+import wellnet.dao.WineryBio;
+import wellnet.dao.WineryBioTranslation;
 
 //use this class to establish a connection to the database
 public class DBContext {
@@ -297,13 +298,13 @@ public class DBContext {
 	}
 	
 	/**
-	 * Returning a list is likely not necessary.
+	 * 
 	 * @param accountId
 	 * @param language
 	 * @return List of all WineryBio associated with the accountId and the given language
 	 * @throws SQLException
 	 */
-	public List<WineryBio> getWineryBio(int accountId, String language) throws SQLException{
+	public WineryBio getWineryBio(int accountId, String language) throws SQLException{
 		
 		Connection connection = null;
 		
@@ -331,7 +332,7 @@ public class DBContext {
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			return fillBioList(rs, tableName);
+			return fillBio(rs, tableName);
 				
 		}finally{
 			if(!connection.isClosed()){
@@ -377,22 +378,19 @@ public class DBContext {
 		}
 	}
 	
-	private List<WineryBio> fillBioList(ResultSet rs, String tableName) throws IllegalArgumentException, SQLException{
+	private WineryBio fillBio(ResultSet rs, String tableName) throws IllegalArgumentException, SQLException{
 		
-		List<WineryBio> wineryBio = new ArrayList<WineryBio>();
+		WineryBio wineryBio = null;
 		
 		if(tableName.equalsIgnoreCase("WINERY_BIO")){
 			
-			while(rs.next()){
-				wineryBio.add(new WineryBio(rs.getInt(WineryBio.ColumnNames[0]),rs.getString(WineryBio.ColumnNames[1])));
-			}
+			wineryBio = new WineryBio(rs.getInt(WineryBio.ColumnNames[0]),rs.getString(WineryBio.ColumnNames[1]));
+			
 			
 		}else if(tableName.equalsIgnoreCase("BIO_TRANSLATION")){
 			
-			while(rs.next()){
-				wineryBio.add(new WineryBioTranslation(rs.getInt(WineryBioTranslation.ColumnNames[0]),rs.getInt(WineryBioTranslation.ColumnNames[1]),
-														rs.getString(WineryBioTranslation.ColumnNames[2]), rs.getString(WineryBioTranslation.ColumnNames[3])));
-			}
+				wineryBio =new WineryBioTranslation(rs.getInt(WineryBioTranslation.ColumnNames[0]),rs.getInt(WineryBioTranslation.ColumnNames[1]),
+														rs.getString(WineryBioTranslation.ColumnNames[2]), rs.getString(WineryBioTranslation.ColumnNames[3]));
 			
 		}else{
 			throw new IllegalArgumentException("Table must be WINERY_BIO or BIO_TRANSLATION");

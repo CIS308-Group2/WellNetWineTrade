@@ -1,5 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="wellnet.dao.WineryBio"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ArrayList, java.io.IOException"%>
+<%@ page import="wellnet.dao.Wine" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
 <!DOCTYPE html>
@@ -61,8 +64,12 @@
 	}else if(request.getMethod().equalsIgnoreCase("POST")){
 		
 		int accountId = Integer.parseInt(request.getParameter("account"));
+		WineryBio bio = dataAccess.getWineryBio(accountId, "english");
+		String wineryBio = "";
+		if(bio != null){
+			wineryBio = displayBean.displayWineryBio(dataAccess.getWineryBio(accountId, "english"));
+		}
 		
-		String wineryBio = displayBean.displayWineryBio(dataAccess.getWineryBio(accountId, "english"));
 %>		
 		<div class="content-cushion">
 		<span class="bio">
@@ -81,8 +88,12 @@
 		<div class="content-cushion">
 		<span class="wines">
 <%
-		String wines = displayBean.displayWines(dataAccess.getWineryWineStock(accountId, "english"));
-		
+		List<Wine> wineList = dataAccess.getWineryWineStock(accountId, "english");
+		String wines = "";
+		if(wineList.size() > 0){
+			wines = displayBean.displayWines(wineList);	
+		}
+				
 		out.println(wines);
 
 	}

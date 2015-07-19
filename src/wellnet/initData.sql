@@ -90,7 +90,7 @@ INSERT INTO WINE
   2013,
   'Reilsing',
   22,
-  NULL,
+  ' ',
   'Delicate with a subtle perfume.  A precise fruit spectrum of freshly cut limes and lemon skin weave harmoniously with elevated floral notes, hints a sweet spice and fragrant kaffir lime leaf. The palate has tension, it is taut and fine. The natural acid line gives definition and precision.  Lime flesh, lemon sherbet and Granny Smith apples grab the palate, which leads to a mineral and slightly chalky and elegant finish.',
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
@@ -100,7 +100,7 @@ INSERT INTO WINE
   2011,
   'Cabernet Sauvignon',
   18,
-  NULL,
+  ' ',
   'A concentrated dark fruit spectrum with an abundance of ripe blackcurrants, cherries and a hint of cassis. Coffee bean, dark chocolate and black olives lie beneath. Subtle dustiness combines with a seductive violet lift, enhancing the varietal fragrance and increasing complexity. A dense and layered palate with incredible texture. The generosity of the palate is carefully laced with a fine and structural acid line. Dark cherries and currants weave through smokey and mocha notes, finishing with long tactile tannins.',  
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
@@ -161,7 +161,7 @@ INSERT INTO WINE_TRANSLATION
   2013,
   'Reisling',
   22,
-  NULL,
+  ' ',
   'Sensaina kaori to sensai.-Tate kattoraimu ya remon no kawa no ori no seikakuna fur?tsu no supekutoru wa, ch?wa no j?sh? fur?rarun?to to, amai supaisu to kaori no kaferaimur?fu o shisa shite imasu. K?gai wa, kinch? o motte sore ga pin to hatta to bakkindesu. Ten''nen no san rain wa, teigi to seido o teiky? shimasu. Raimu niku, remonsh?betto to guran?sumisuringo wa mineraru to wazuka hakua-shitsu to j?hin''na shiagari ni tsunagaru k?gai o, tsukami ma',
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
@@ -173,7 +173,7 @@ INSERT INTO WINE_TRANSLATION
   2011,
   's?biniyon',
   18,
-  NULL,
+  ' ',
   'Juku shita burakkukaranto, cher? no yutaka-sa to kashisu no hinto to n?shuku sa reta d?kufur?tsu no supekutoru. K?h? mame, d?kuchokor?to to burakkuor?bu wa,-ka ni arimasu. Bimy?na hokori ppo-sa wa hinshu no kaori o takame, fukuzatsu-sa o masu, miwaku-tekina murasakiiro no rifuto to ketsug? shimasu. Shinji rarenai hodo no shitsukan ga missh? shite s?j? k?gai. K?gai no kandai-sa o shinch? ni bakkin oyobi k?z? san rain ga kon''ny? sa rete imasu. D?kucher? to karanto wa nagai shokkaku tan''nin de shiage, sum?k? to moka no n?to o t?shite ori.',
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
@@ -185,7 +185,7 @@ INSERT INTO WINE_TRANSLATION
   2013,
   'Reisling',
   22,
-  NULL,
+  ' ',
   'Delicate mit einem feinen Duft. Eine präzise Fruchtspektrum von frisch geschnittenem Limetten und Zitrone Haut weben harmonisch mit erhöhten floralen Noten, Hinweise eines süßen Gewürzen und duft Kaffernlimette Blatt. Der Gaumen hat Spannung, es straff und ist in Ordnung. Die natürliche Säure Zeile gibt Definition und Präzision. Lime Fleisch, Zitronensorbet und Granny Smith Äpfel greifen den Gaumen, die zu einem mineralischen und leicht kalkhaltigen und elegantes Finish führt.',
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
@@ -197,7 +197,7 @@ INSERT INTO WINE_TRANSLATION
   2013,
   'Cabernet Sauvignon',
   18,
-  NULL,
+  '',
   'Eine konzentrierte dunkle Frucht-Spektrum mit einer Fülle von reifen schwarzen Johannisbeeren, Kirschen und einem Hauch Cassis. Kaffeebohne, dunkle Schokolade und schwarzen Oliven liegen unter. Subtile Staubigkeit kombiniert mit einer verführerischen violet Aufzug, die Verbesserung der Sortenduft und zunehmender Komplexität. Ein dichtes und geschichteten Gaumen mit unglaublichen Textur. Die Großzügigkeit der Gaumen wird vorsichtig mit einer feinen Säure und Strukturlinie geschnürt. Dunkle Kirschen und Johannisbeeren schlängeln sich durch smokey und Mokkanoten, Finishing mit langen taktile Tanninen.',
   (SELECT ACCOUNT_ID FROM BUSINESS_ACCOUNT WHERE COMPANY_NAME = 'LEEUWIN ESTATE WINERY'));
   
